@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legend Of Quotex🪓</title>
+    <link rel="icon" href="https://i.postimg.cc/xTQK4GpX/photo-2025-04-19-12-44-50.jpg" type="image/jpg">
+    <style>
+        body {
+            background-color: #121212;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            display: none;
+        }
+        .password-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            text-align: center;
+            width: 350px;
+        }
+        .password-container h2 {
+            margin-top: 0;
+            color: #00ff00;
+        }
+        .password-container p {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        .password-container input {
+            padding: 12px;
+            width: 80%;
+            margin-bottom: 15px;
+            background-color: #222;
+            border: 1px solid #00ff00;
+            color: white;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .password-container button {
+            padding: 12px 25px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+        .password-container button:hover {
+            background-color: #218838;
+        }
+        .telegram-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: #0088cc;
+            text-decoration: none;
+        }
+        .telegram-link img {
+            width: 24px;
+            margin-right: 10px;
+        }
+        h1, h3 {
+            color: #00ff00;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        a {
+            color: cyan;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #00ffff;
+            text-decoration: underline;
+        }
+        select, input {
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #222;
+            color: white;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .button-container {
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+        }
+        .error-message {
+            color: red;
+        }
+        .animation-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        .signal-item {
+            padding: 8px 0;
+            margin: 3px 0;
+            font-family: monospace;
+            white-space: pre;
+            font-size: 14px;
+        }
+        .signal-call {
+            color: #00ff00;
+        }
+        .signal-put {
+            color: #ff5555;
+        }
+        .download-btn {
+            background-color: #007bff;
+            margin: 20px 0;
+        }
+        .download-btn:hover {
+            background-color: #0069d9;
+        }
+        .telegram-btn {
+            background-color: #0088cc;
+        }
+        .telegram-btn:hover {
+            background-color: #0077b6;
+        }
+        #current-date, #current-time {
+            font-weight: bold;
+            color: #00ff00;
+        }
+        .timeframe-option {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="password-container" id="password-container">
+        <div class="logo">
+            <img src="https://i.postimg.cc/xTQK4GpX/photo-2025-04-19-12-44-50.jpg" alt="Legend Of Quotex Logo">
+        </div>
+        <h2>Legend Of Quotex🪓</h2>
+        <p>Password required to access the signal generator</p>
+        <p style="font-size: 12px; color: #777;">(Join our Telegram channel to get the password)</p>
+        <input type="password" id="password-input" placeholder="Enter password">
+        <button id="submit-password">Submit</button>
+        <p id="password-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
+        <a href="https://t.me/LegendProTredar" target="_blank" class="telegram-link">
+            <img src="https://telegram.org/img/t_logo.png" alt="Telegram">
+            Join Telegram Channel for Password
+        </a>
+    </div>
+
+    <div class="container" id="main-container">
+        <div class="logo">
+            <img src="https://i.postimg.cc/xTQK4GpX/photo-2025-04-19-12-44-50.jpg" alt="Legend Of Quotex Logo">
+        </div>
+        <h1>Legend Of Quotex🪓 REAL-TIME SIGNAL GENERATOR</h1>
+        <p>Legend Of Quotex🪓 PREMIUM SOFTWARE</p>
+        <p id="timezone-info">Timezone: Asia/Dhaka | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
+        <h3>Join our Telegram Channel:</h3>
+        <a href="https://t.me/LegendProTredar" target="_blank" rel="noopener noreferrer">Legend Of Quotex🪓</a>
+        
+        <h3>Available Assets:</h3>
+        <select id="asset-select">
+            <option value="">Select an asset</option>
+        </select>
+
+        <h3>Time Frame:</h3>
+        <select id="timeframe-select">
+            <option value="1">01:00 minutes</option>
+            <option value="2">02:00 minutes</option>
+            <option value="5" selected>05:00 minutes</option>
+            <option value="10">10:00 minutes</option>
+            <option value="15">15:00 minutes</option>
+            <option value="30">30:00 minutes</option>
+            <option value="60">01:00:00 hours</option>
+            <option value="120">02:00:00 hours</option>
+            <option value="240">04:00:00 hours</option>
+        </select>
+
+        <h3>Number of Signals to Generate:</h3>
+        <input type="number" id="signal-count" value="10" min="1" />
+
+        <h3>Filter Signals:</h3>
+        <select id="filter-select">
+            <option value="ALL">All</option>
+            <option value="CALL">CALL</option>
+            <option value="PUT">PUT</option>
+        </select>
+
+        <div class="button-container">
+            <button id="generate-signals">Generate Signals</button>
+            <button id="reset-signals">Reset Signals</button>
+            <button class="telegram-btn" onclick="window.open('https://t.me/LegendProTredar', '_blank')">Join Telegram</button>
+        </div>
+
+        <p id="error-message" class="error-message"></p>
+        
+        <h3>Generated Signals:</h3>
+        <div id="signal-list"></div>
+        <button class="download-btn" id="download-signals">Download Signals (TXT)</button>
+        
+        <div id="animation-message" class="animation-message">
+            <h3>New Signals Generated!</h3>
+        </div>
+    </div>
+
+    <script>
+        const availableAssets = [
+            "AUD/CAD (OTC)", "AUD/CHF (OTC)", "AUD/JPY (OTC)", "AUD/NZD (OTC)", "AUD/USD (OTC)",
+            "CAD/CHF (OTC)", "CHF/JPY (OTC)", "EUR/AUD (OTC)", "EUR/CAD (OTC)", "EUR/CHF (OTC)",
+            "EUR/GBP (OTC)", "EUR/USD (OTC)", "GBP/AUD (OTC)", "GBP/CAD (OTC)", "GBP/CHF (OTC)",
+            "GBP/JPY (OTC)", "GBP/NZD (OTC)", "GBP/USD (OTC)", "NZD/CAD (OTC)", "NZD/CHF (OTC)",
+            "NZD/JPY (OTC)", "USD/BDT (OTC)", "USD/BRL (OTC)", "USD/CAD (OTC)", "USD/CHF (OTC)",
+            "USD/COP (OTC)", "USD/DZD (OTC)", "USD/INR (OTC)", "USD/JPY (OTC)", "USD/NGN (OTC)",
+            "USD/PKR (OTC)", "USD/SGD (OTC)", "USD/TRY (OTC)", "USD/ZAR (OTC)", "Bitcoin (OTC)",
+            "Gold (OTC)", "Silver (OTC)", "USCrude (OTC)", "UKBrent (OTC)"
+        ];
+
+        // To change the password, modify this line in the code:
+        const CURRENT_PASSWORD = "Legend";
+        
+        let signals = [];
+        let existingSignals = new Set();
+
+        // Password protection
+        document.getElementById('submit-password').addEventListener('click', function() {
+            const enteredPassword = document.getElementById('password-input').value;
+            const errorElement = document.getElementById('password-error');
+            
+            if (enteredPassword === CURRENT_PASSWORD) {
+                document.getElementById('password-container').style.display = 'none';
+                document.getElementById('main-container').style.display = 'block';
+            } else {
+                errorElement.style.display = 'block';
+            }
+        });
+
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('submit-password').click();
+            }
+        });
+
+        function formatTime(date) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        function getTimeframeText(timeframe) {
+            const minutes = parseInt(timeframe);
+            if (minutes < 60) {
+                return `${minutes.toString().padStart(2, '0')}:00 minutes`;
+            } else {
+                const hours = minutes / 60;
+                return `${hours.toString().padStart(2, '0')}:00:00 hours`;
+            }
+        }
+
+        function generateSignal(asset, time, timeframe) {
+            const direction = Math.random() < 0.5 ? 'CALL' : 'PUT';
+            const timeframeText = timeframe < 60 ? 
+                `${timeframe.toString().padStart(2, '0')}Min` : 
+                `${(timeframe/60).toString().padStart(2, '0')}Hour`;
+            
+            return {
+                asset,
+                time,
+                direction,
+                timeframe: timeframeText
+            };
+        }
+
+        function generateRandomInterval() {
+            // Generate random interval between 1 to 8 minutes
+            return Math.floor(Math.random() * 8) + 1;
+        }
+
+        function generateUniqueTimes(count, timeframe) {
+            const times = [];
+            let nextTime = new Date();
+            
+            for (let i = 0; i < count; i++) {
+                // Add random interval (1-8 minutes) to the time
+                const randomInterval = generateRandomInterval();
+                nextTime.setMinutes(nextTime.getMinutes() + randomInterval);
+                times.push(formatTime(nextTime));
+            }
+            
+            return times;
+        }
+
+        function handleGenerateSignals() {
+            const selectedAsset = document.getElementById('asset-select').value;
+            const signalCount = Number(document.getElementById('signal-count').value);
+            const timeframe = document.getElementById('timeframe-select').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            if (!selectedAsset) {
+                errorMessage.textContent = 'Please select an asset before generating signals!';
+                return;
+            }
+
+            errorMessage.textContent = '';
+            const uniqueTimes = generateUniqueTimes(signalCount, timeframe);
+            const newSignals = [];
+
+            uniqueTimes.forEach((time) => {
+                const signalKey = `${selectedAsset} | ${time}`;
+                if (!existingSignals.has(signalKey)) {
+                    const newSignal = generateSignal(selectedAsset, time, timeframe);
+                    newSignals.push(newSignal);
+                    existingSignals.add(signalKey);
+                }
+            });
+
+            signals.push(...newSignals);
+            displaySignals(newSignals);
+            showAnimation();
+        }
+
+        function displaySignals(newSignals) {
+            const signalList = document.getElementById('signal-list');
+            newSignals.forEach(signal => {
+                const signalItem = document.createElement('div');
+                signalItem.className = 'signal-item';
+                
+                // Format the signal line with proper spacing
+                const assetPart = signal.asset.padEnd(15, ' ');
+                const timePart = signal.time.padEnd(8, ' ');
+                const directionPart = signal.direction.padEnd(10, ' ');
+                
+                signalItem.textContent = `${assetPart} ; ${timePart} ; ${directionPart}${signal.timeframe}`;
+                signalItem.classList.add(signal.direction === 'CALL' ? 'signal-call' : 'signal-put');
+                
+                signalList.appendChild(signalItem);
+            });
+        }
+
+        function downloadSignals() {
+            if (signals.length === 0) {
+                document.getElementById('error-message').textContent = 'No signals to download!';
+                return;
+            }
+
+            let content = "Legend Of Quotex🪓 - Premium Signals\n";
+            content += "Generated on: " + new Date().toLocaleString() + "\n\n";
+            content += "==============================================\n";
+            content += "ASSET           ; TIME     ; DIRECTION  TIMEFRAME\n";
+            content += "==============================================\n";
+            
+            signals.forEach(signal => {
+                const assetPart = signal.asset.padEnd(15, ' ');
+                const timePart = signal.time.padEnd(8, ' ');
+                const directionPart = signal.direction.padEnd(10, ' ');
+                content += `${assetPart} ; ${timePart} ; ${directionPart}${signal.timeframe}\n`;
+            });
+            
+            content += "\n\nJoin our Telegram channel for more signals: https://t.me/LegendProTredar";
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Legend_Of_Quotex_Signals_${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showAnimation() {
+            const animationMessage = document.getElementById('animation-message');
+            animationMessage.style.display = 'block';
+            setTimeout(() => {
+                animationMessage.style.display = 'none';
+            }, 2000);
+        }
+
+        function handleResetSignals() {
+            signals = [];
+            existingSignals = new Set();
+            document.getElementById('signal-list').innerHTML = '';
+            document.getElementById('error-message').textContent = '';
+        }
+
+        function updateDateTime() {
+            const currentDate = new Date();
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString();
+            document.getElementById('current-time').textContent = currentDate.toLocaleTimeString('en-GB');
+        }
+
+        // Populate the asset dropdown
+        const assetSelect = document.getElementById('asset-select');
+        availableAssets.forEach(asset => {
+            const option = document.createElement('option');
+            option.value = asset;
+            option.textContent = asset;
+            assetSelect.appendChild(option);
+        });
+
+        // Event listeners
+        document.getElementById('generate-signals').addEventListener('click', handleGenerateSignals);
+        document.getElementById('reset-signals').addEventListener('click', handleResetSignals);
+        document.getElementById('download-signals').addEventListener('click', downloadSignals);
+
+        // Update time every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+    </script>
+</body>
+</html>
