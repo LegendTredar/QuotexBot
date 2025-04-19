@@ -172,6 +172,18 @@
         .logo img {
             height: 60px;
         }
+        .candle-time {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #00ff00;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        .mtg-message {
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #ffff00;
+        }
     </style>
 </head>
 <body>
@@ -197,9 +209,20 @@
         </div>
         <h1>Legend Of Quotex🪓 REAL-TIME SIGNAL GENERATOR</h1>
         <p>Legend Of Quotex🪓 PREMIUM SOFTWARE</p>
-        <p id="timezone-info">Timezone: Asia/Dhaka | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
+        
+        <h3>Select Country:</h3>
+        <select id="country-select">
+            <option value="Asia/Dhaka">Bangladesh (GMT+6)</option>
+            <option value="Asia/Kolkata">India (GMT+5:30)</option>
+            <option value="Asia/Karachi">Pakistan (GMT+5)</option>
+            <option value="America/Sao_Paulo">Brazil (GMT-3)</option>
+            <option value="Asia/Kabul">Afghanistan (GMT+4:30)</option>
+        </select>
+        
+        <p id="timezone-info">Timezone: <span id="timezone-display">Asia/Dhaka (GMT+6)</span> | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
+        
         <h3>Join our Telegram Channel:</h3>
-        <a href="https://t.me/LegendProTredar" target="_blank" rel="noopener noreferrer">Legend Of Quotex🪓</a>
+        <a href="https://t.me/LegendProTredar" target="_blank" rel="noopener noreferrer">LegendPro Trader</a>
         
         <h3>Available Assets:</h3>
         <select id="asset-select">
@@ -238,6 +261,8 @@
         <p id="error-message" class="error-message"></p>
         
         <h3>Generated Signals:</h3>
+        <div id="candle-time" class="candle-time"></div>
+        <div id="mtg-message" class="mtg-message">Use 1Step MTG If You Lose</div>
         <div id="signal-list"></div>
         <button class="download-btn" id="download-signals">Download Signals (TXT)</button>
         
@@ -258,18 +283,27 @@
             "Gold (OTC)", "Silver (OTC)", "USCrude (OTC)", "UKBrent (OTC)"
         ];
 
-        // To change the password, modify this line in the code:
-        const CURRENT_PASSWORD = "Legend@";
-        
+        const CORRECT_PASSWORD = "Legend@";
         let signals = [];
         let existingSignals = new Set();
+        let currentTimezone = "Asia/Dhaka";
+        let currentTimeframe = "5";
+
+        // Country to GMT mapping
+        const countryGMT = {
+            "Asia/Dhaka": "GMT+6",
+            "Asia/Kolkata": "GMT+5:30",
+            "Asia/Karachi": "GMT+5",
+            "America/Sao_Paulo": "GMT-3",
+            "Asia/Kabul": "GMT+4:30"
+        };
 
         // Password protection
         document.getElementById('submit-password').addEventListener('click', function() {
             const enteredPassword = document.getElementById('password-input').value;
             const errorElement = document.getElementById('password-error');
             
-            if (enteredPassword === CURRENT_PASSWORD) {
+            if (enteredPassword === CORRECT_PASSWORD) {
                 document.getElementById('password-container').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
             } else {
@@ -284,32 +318,42 @@
         });
 
         function formatTime(date) {
-            const hours = date.getHours().toString().padStart(2, '0');
-            const minutes = date.getMinutes().toString().padStart(2, '0');
-            return `${hours}:${minutes}`;
+            const options = {
+                timeZone: currentTimezone,
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleTimeString('en-US', options);
+        }
+
+        function formatDate(date) {
+            const options = {
+                timeZone: currentTimezone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            };
+            return date.toLocaleDateString('en-US', options);
         }
 
         function getTimeframeText(timeframe) {
             const minutes = parseInt(timeframe);
             if (minutes < 60) {
-                return `${minutes.toString().padStart(2, '0')}:00 minutes`;
+                return `${minutes} min`;
             } else {
                 const hours = minutes / 60;
-                return `${hours.toString().padStart(2, '0')}:00:00 hours`;
+                return `${hours} hour`;
             }
         }
 
-        function generateSignal(asset, time, timeframe) {
+        function generateSignal(asset, time) {
             const direction = Math.random() < 0.5 ? 'CALL' : 'PUT';
-            const timeframeText = timeframe < 60 ? 
-                `${timeframe.toString().padStart(2, '0')}Min` : 
-                `${(timeframe/60).toString().padStart(2, '0')}Hour`;
             
             return {
                 asset,
                 time,
-                direction,
-                timeframe: timeframeText
+                direction
             };
         }
 
@@ -321,6 +365,10 @@
         function generateUniqueTimes(count, timeframe) {
             const times = [];
             let nextTime = new Date();
+            
+            // Adjust for selected timezone
+            const options = { timeZone: currentTimezone };
+            nextTime = new Date(nextTime.toLocaleString('en-US', options));
             
             for (let i = 0; i < count; i++) {
                 // Add random interval (1-8 minutes) to the time
@@ -350,13 +398,18 @@
             uniqueTimes.forEach((time) => {
                 const signalKey = `${selectedAsset} | ${time}`;
                 if (!existingSignals.has(signalKey)) {
-                    const newSignal = generateSignal(selectedAsset, time, timeframe);
+                    const newSignal = generateSignal(selectedAsset, time);
                     newSignals.push(newSignal);
                     existingSignals.add(signalKey);
                 }
             });
 
             signals.push(...newSignals);
+            
+            // Update candle time display
+            currentTimeframe = timeframe;
+            document.getElementById('candle-time').textContent = `Candle time: ${getTimeframeText(currentTimeframe)}`;
+            
             displaySignals(newSignals);
             showAnimation();
         }
@@ -372,7 +425,7 @@
                 const timePart = signal.time.padEnd(8, ' ');
                 const directionPart = signal.direction.padEnd(10, ' ');
                 
-                signalItem.textContent = `${assetPart} ; ${timePart} ; ${directionPart}${signal.timeframe}`;
+                signalItem.textContent = `${assetPart} ; ${timePart} ; ${directionPart}`;
                 signalItem.classList.add(signal.direction === 'CALL' ? 'signal-call' : 'signal-put');
                 
                 signalList.appendChild(signalItem);
@@ -386,16 +439,19 @@
             }
 
             let content = "Legend Of Quotex🪓 - Premium Signals\n";
-            content += "Generated on: " + new Date().toLocaleString() + "\n\n";
+            content += "Generated on: " + new Date().toLocaleString() + "\n";
+            content += "Timezone: " + currentTimezone + " (" + countryGMT[currentTimezone] + ")\n";
+            content += "Candle time: " + getTimeframeText(currentTimeframe) + "\n";
+            content += "Use 1Step MTG If You Lose\n\n";
             content += "==============================================\n";
-            content += "ASSET           ; TIME     ; DIRECTION  TIMEFRAME\n";
+            content += "ASSET           ; TIME     ; DIRECTION\n";
             content += "==============================================\n";
             
             signals.forEach(signal => {
                 const assetPart = signal.asset.padEnd(15, ' ');
                 const timePart = signal.time.padEnd(8, ' ');
                 const directionPart = signal.direction.padEnd(10, ' ');
-                content += `${assetPart} ; ${timePart} ; ${directionPart}${signal.timeframe}\n`;
+                content += `${assetPart} ; ${timePart} ; ${directionPart}\n`;
             });
             
             content += "\n\nJoin our Telegram channel for more signals: https://t.me/LegendProTredar";
@@ -423,13 +479,21 @@
             signals = [];
             existingSignals = new Set();
             document.getElementById('signal-list').innerHTML = '';
+            document.getElementById('candle-time').textContent = '';
             document.getElementById('error-message').textContent = '';
         }
 
         function updateDateTime() {
             const currentDate = new Date();
-            document.getElementById('current-date').textContent = currentDate.toLocaleDateString();
-            document.getElementById('current-time').textContent = currentDate.toLocaleTimeString('en-GB');
+            document.getElementById('current-date').textContent = formatDate(currentDate);
+            document.getElementById('current-time').textContent = formatTime(currentDate);
+        }
+
+        function updateTimezone() {
+            const countrySelect = document.getElementById('country-select');
+            currentTimezone = countrySelect.value;
+            document.getElementById('timezone-display').textContent = `${currentTimezone} (${countryGMT[currentTimezone]})`;
+            updateDateTime();
         }
 
         // Populate the asset dropdown
@@ -445,10 +509,15 @@
         document.getElementById('generate-signals').addEventListener('click', handleGenerateSignals);
         document.getElementById('reset-signals').addEventListener('click', handleResetSignals);
         document.getElementById('download-signals').addEventListener('click', downloadSignals);
+        document.getElementById('country-select').addEventListener('change', updateTimezone);
+        document.getElementById('timeframe-select').addEventListener('change', function() {
+            currentTimeframe = this.value;
+        });
 
         // Update time every second
         setInterval(updateDateTime, 1000);
         updateDateTime();
+        updateTimezone(); // Initialize timezone display
     </script>
 </body>
 </html>
